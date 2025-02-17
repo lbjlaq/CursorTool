@@ -13,6 +13,8 @@
             --accent: #0071E3;
             --section-bg: #F5F5F7;
             --card-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            --section-spacing: 120px;  /* 新增：统一区块间距 */
+            --container-width: 1200px; /* 新增：统一容器宽度 */
         }
 
         * {
@@ -30,9 +32,9 @@
         }
 
         .container {
-            max-width: 1000px;
+            max-width: var(--container-width);
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 24px;
         }
 
         /* 导航栏 */
@@ -63,29 +65,116 @@
             text-decoration: none;
         }
 
-        /* 英雄区域 */
-        .hero {
-            padding: 120px 0 60px;
-            text-align: center;
-            background: var(--background);
-        }
-
-        .hero h1 {
-            font-size: 56px;
-            line-height: 1.07143;
+        /* 区块标题统一样式 */
+        section h2 {
+            font-size: 40px;
+            line-height: 1.1;
             font-weight: 600;
-            letter-spacing: -0.005em;
-            margin-bottom: 16px;
+            letter-spacing: -0.009em;
+            text-align: center;
+            margin-bottom: 60px;
         }
 
-        .hero p {
-            font-size: 28px;
-            line-height: 1.10722;
-            font-weight: 400;
-            letter-spacing: .004em;
-            color: var(--text-secondary);
-            max-width: 800px;
-            margin: 0 auto;
+        /* 区块间距统一 */
+        section {
+            padding: var(--section-spacing) 0;
+        }
+
+        section:nth-child(even) {
+            background: var(--section-bg);
+        }
+
+        /* Hero 区域背景效果 */
+        .hero {
+            position: relative;
+            padding: 180px 0 var(--section-spacing);
+            text-align: center;
+            background: linear-gradient(180deg, #f5f5f7 0%, #fff 100%);
+            overflow: hidden;
+        }
+
+        /* 添加动态背景元素 */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0,113,227,0.05) 0%, rgba(0,113,227,0) 50%),
+                        radial-gradient(circle at 70% 30%, rgba(0,113,227,0.05) 0%, rgba(0,113,227,0) 70%);
+            animation: rotate 30s linear infinite;
+            z-index: 0;
+        }
+
+        /* 确保内容在背景之上 */
+        .hero > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 添加浮动效果的装饰元素 */
+        .hero-decoration {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .hero-decoration::before,
+        .hero-decoration::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, rgba(0,113,227,0.1), rgba(0,113,227,0));
+            filter: blur(50px);
+        }
+
+        .hero-decoration::before {
+            top: -100px;
+            left: -100px;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .hero-decoration::after {
+            bottom: -100px;
+            right: -100px;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(30px) scale(1.1);
+            }
+        }
+
+        /* 更新 hero 区域的按钮样式 */
+        .github-buttons .download-btn {
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .github-buttons .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
         }
 
         /* 功能特性区 */
@@ -96,15 +185,14 @@
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
-            max-width: 1000px;
             margin: 0 auto;
         }
 
         .feature-card {
             background: var(--background);
-            border-radius: 18px;
+            border-radius: 20px;
             padding: 40px;
             box-shadow: var(--card-shadow);
             transition: transform 0.3s ease;
@@ -155,17 +243,17 @@
 
         .download-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            max-width: 1000px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
             margin: 0 auto;
         }
 
         .download-card {
-            background: var(--section-bg);
-            border-radius: 18px;
+            background: var(--background);
+            border-radius: 20px;
             padding: 40px;
             text-align: center;
+            box-shadow: var(--card-shadow);
             transition: transform 0.3s ease;
         }
 
@@ -246,19 +334,20 @@
 
         /* 页脚 */
         footer {
-            padding: 40px 0;
-            text-align: center;
-            font-size: 14px;
-            color: var(--text-secondary);
+            padding: 60px 0;
             background: var(--background);
+            text-align: center;
+            color: var(--text-secondary);
         }
 
         /* 响应式设计 */
         @media (max-width: 768px) {
-            .features-grid,
-            .download-grid,
-            .guide-grid {
-                grid-template-columns: 1fr;
+            :root {
+                --section-spacing: 80px;
+            }
+
+            .hero {
+                padding: 120px 0 var(--section-spacing);
             }
 
             .hero h1 {
@@ -266,11 +355,11 @@
             }
 
             .hero p {
-                font-size: 21px;
+                font-size: 24px;
             }
 
-            .downloads h2 {
-                font-size: 36px;
+            section h2 {
+                font-size: 32px;
             }
         }
 
@@ -321,60 +410,139 @@
     </a>
 
     <!-- 导航栏 -->
-    <nav class="navbar">
-        <div class="nav-content">
-            <a href="#" class="logo">Cursor ID 修改器</a>
+    <nav class="navbar" style="width: 100vw; padding: 0 40px; background: rgba(255, 255, 255, 0.8); backdrop-filter: saturate(180%) blur(20px);">
+        <div style="max-width: 1200px; margin: 0 auto; height: 64px; display: flex; align-items: center;">
+            <a href="#" style="font-size: 20px; font-weight: 600; color: #1d1d1f; text-decoration: none;">
+                Cursor ID 修改器
+            </a>
         </div>
     </nav>
 
     <!-- 主要内容 -->
-    <div class="container">
-        <!-- 英雄区域 -->
-        <section class="hero">
-            <h1>Cursor ID 修改器</h1>
-            <p>开源的 Cursor 编辑器配置管理工具</p>
-            <div class="github-buttons" style="margin-top: 32px;">
-                <a href="https://github.com/lbjlaq/CursorTool" class="download-btn" style="margin: 0 8px;">
-                    <i class="fab fa-github"></i> Star on GitHub
+    <section class="hero" style="width: 100vw; height: 500px; background: #f5f5f7; margin: 0; padding: 0; position: relative; display: flex; align-items: center; justify-content: center;">
+        <div style="text-align: center; max-width: 800px; padding: 0 24px;">
+            <h1 style="font-size: 48px; font-weight: 600; margin-bottom: 16px;">Cursor ID 修改器</h1>
+            <p style="font-size: 24px; color: #86868B; margin-bottom: 40px;">开源的 Cursor 编辑器配置管理工具</p>
+            <div class="github-buttons">
+                <a href="https://github.com/lbjlaq/CursorTool" 
+                   style="display: inline-flex; align-items: center; background: #0071E3; color: white; text-decoration: none; padding: 12px 32px; border-radius: 30px; font-size: 16px; margin: 0 8px; transition: all 0.3s ease;">
+                    <i class="fab fa-github" style="margin-right: 8px;"></i> Star on GitHub
                 </a>
-                <a href="https://github.com/lbjlaq/CursorTool/issues" class="download-btn" style="background: var(--text);">
-                    <i class="fas fa-bug"></i> 反馈问题
+                <a href="https://github.com/lbjlaq/CursorTool/issues" 
+                   style="display: inline-flex; align-items: center; background: #1d1d1f; color: white; text-decoration: none; padding: 12px 32px; border-radius: 30px; font-size: 16px; margin: 0 8px; transition: all 0.3s ease;">
+                    <i class="fas fa-bug" style="margin-right: 8px;"></i> 反馈问题
                 </a>
             </div>
-        </section>
-    </div>
+        </div>
+        <!-- 右上角装饰 -->
+        <div style="position: absolute; top: 0; right: 0; width: 300px; height: 300px; background: linear-gradient(135deg, #0071E3 0%, transparent 100%); opacity: 0.1; clip-path: polygon(100% 0, 0 0, 100% 100%);"></div>
+        <!-- 左下角装饰 -->
+        <div style="position: absolute; bottom: 0; left: 0; width: 300px; height: 300px; background: linear-gradient(315deg, #0071E3 0%, transparent 100%); opacity: 0.1; clip-path: polygon(0 100%, 0 0, 100% 100%);"></div>
+    </section>
+
+    <!-- 界面展示 -->
+    <section class="screenshots" style="background: #f5f5f7; padding: 40px 0;">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 32px; margin-bottom: 30px;">界面展示</h2>
+            
+            <!-- 标签切换 -->
+            <div style="text-align: center; margin-bottom: 20px;">
+                <div style="display: inline-flex; background: white; padding: 5px; border-radius: 40px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                    <button onclick="showVersion('windows')" id="winBtn" 
+                            style="border: none; background: #1d1d1f; color: white; padding: 8px 24px; border-radius: 30px; font-size: 14px; cursor: pointer; display: flex; align-items: center; margin-right: 5px;">
+                        <i class="fab fa-windows" style="margin-right: 8px;"></i>Windows
+                    </button>
+                    <button onclick="showVersion('macos')" id="macBtn"
+                            style="border: none; background: none; color: #1d1d1f; padding: 8px 24px; border-radius: 30px; font-size: 14px; cursor: pointer; display: flex; align-items: center;">
+                        <i class="fab fa-apple" style="margin-right: 8px;"></i>macOS
+                    </button>
+                </div>
+            </div>
+
+            <!-- 展示区域 -->
+            <div style="max-width: 900px; margin: 0 auto;">
+                <!-- Windows 版本 -->
+                <div id="windows" style="display: block;">
+                    <div style="background: white; padding: 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+                        <img src="images/windows.png" alt="Windows界面" 
+                            style="width: 100%; border-radius: 8px; border: 1px solid #eee;">
+                    </div>
+                </div>
+                <!-- macOS 版本 -->
+                <div id="macos" style="display: none;">
+                    <div style="background: white; padding: 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+                        <img src="images/macos.jpg" alt="macOS界面" 
+                            style="width: 100%; border-radius: 8px; border: 1px solid #eee;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 添加切换脚本 -->
+    <script>
+        function showVersion(version) {
+            // 隐藏所有版本
+            document.getElementById('windows').style.display = 'none';
+            document.getElementById('macos').style.display = 'none';
+            
+            // 显示选中版本
+            document.getElementById(version).style.display = 'block';
+            
+            // 更新按钮样式
+            if (version === 'windows') {
+                document.getElementById('winBtn').style.background = '#1d1d1f';
+                document.getElementById('winBtn').style.color = 'white';
+                document.getElementById('macBtn').style.background = 'none';
+                document.getElementById('macBtn').style.color = '#1d1d1f';
+            } else {
+                document.getElementById('macBtn').style.background = '#1d1d1f';
+                document.getElementById('macBtn').style.color = 'white';
+                document.getElementById('winBtn').style.background = 'none';
+                document.getElementById('winBtn').style.color = '#1d1d1f';
+            }
+        }
+    </script>
 
     <!-- 功能特性 -->
-    <section class="features">
+    <section class="features" style="background: white; padding: 100px 0;">
         <div class="container">
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
+            <h2 style="text-align: center; font-size: 32px; margin-bottom: 60px;">功能特点</h2>
+            <div class="features-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; max-width: 1000px; margin: 0 auto;">
+                <!-- 修改设备标识 -->
+                <div class="feature-card" style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+                    <div style="color: #0071E3; font-size: 40px; margin-bottom: 20px;">
                         <i class="fas fa-id-card"></i>
                     </div>
-                    <h3>修改设备标识</h3>
-                    <p>快速修改设备 ID，轻松管理配置</p>
+                    <h3 style="font-size: 24px; margin-bottom: 12px;">修改设备标识</h3>
+                    <p style="color: #86868B; font-size: 17px;">快速修改设备 ID，轻松管理配置</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
+                
+                <!-- 配置备份还原 -->
+                <div class="feature-card" style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+                    <div style="color: #0071E3; font-size: 40px; margin-bottom: 20px;">
                         <i class="fas fa-database"></i>
                     </div>
-                    <h3>配置备份还原</h3>
-                    <p>支持配置文件的备份和恢复</p>
+                    <h3 style="font-size: 24px; margin-bottom: 12px;">配置备份还原</h3>
+                    <p style="color: #86868B; font-size: 17px;">支持配置文件的备份和恢复</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
+                
+                <!-- 更新控制开关 -->
+                <div class="feature-card" style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+                    <div style="color: #0071E3; font-size: 40px; margin-bottom: 20px;">
                         <i class="fas fa-sync-alt"></i>
                     </div>
-                    <h3>更新控制开关</h3>
-                    <p>灵活控制自动更新功能</p>
+                    <h3 style="font-size: 24px; margin-bottom: 12px;">更新控制开关</h3>
+                    <p style="color: #86868B; font-size: 17px;">灵活控制自动更新功能</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
+                
+                <!-- 中英文界面 -->
+                <div class="feature-card" style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+                    <div style="color: #0071E3; font-size: 40px; margin-bottom: 20px;">
                         <i class="fas fa-language"></i>
                     </div>
-                    <h3>中英文界面</h3>
-                    <p>支持中英文双语切换</p>
+                    <h3 style="font-size: 24px; margin-bottom: 12px;">中英文界面</h3>
+                    <p style="color: #86868B; font-size: 17px;">支持中英文双语切换</p>
                 </div>
             </div>
         </div>

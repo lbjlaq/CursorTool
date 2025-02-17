@@ -2,6 +2,19 @@
 
 一个用于管理 Cursor 编辑器配置的开源工具。
 
+## 📸 界面展示
+
+<details>
+<summary>点击查看界面截图</summary>
+
+### Windows 版本
+![Windows界面](images/windows.png)
+
+### macOS 版本
+![macOS界面](images/macos.jpg)
+
+</details>
+
 ## ✨ 功能特点
 
 - 🔄 修改设备标识
@@ -90,3 +103,17 @@ psutil>=5.9.0
 ## 📝 免责声明
 
 本工具仅供学习研究使用，请勿用于商业用途。使用本工具所造成的任何问题由使用者自行承担。
+
+## 🚀 下载
+
+### Windows 版本
+- [GitHub Release](https://github.com/lbjlaq/CursorTool/releases/download/v1.0.0/CursorTool-win.exe)
+- 备用下载链接：
+  - [蓝奏云](https://your-lanzou-link)
+  - [百度网盘](https://your-baidu-link)
+
+### macOS 版本
+- [GitHub Release](https://github.com/lbjlaq/CursorTool/releases/download/v1.0.0/CursorTool-mac)
+- 备用下载链接：
+  - [蓝奏云](https://your-lanzou-link)
+  - [百度网盘](https://your-baidu-link)
